@@ -1,8 +1,6 @@
-import { ProgressBar } from "../ProgressBar.js";
-
 export function analizeWorker(text) {
   let worker = new Worker("./DataAnalizers/Worker.js");
-  var progressBar = ProgressBar.getProgressBar().createProgressBar();
+  let progressBar = document.getElementById("progress_bar");
   var pr = document.getElementById("progressNumber");
   if (pr == undefined) {
     pr = document.createElement("div");

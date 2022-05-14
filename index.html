@@ -1,21 +1,53 @@
-<head> 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<head>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous"
+  />
 </head>
 <body>
   <form id="myForm">
-    <input type="file" id="csvFile" accept=".csv" name="filename" />
-    <br />
-    <select name="wayOfProcessing">
-      <option value="default">default</option>
-      <option value="pseudoMultiThreading">pseudo multi-threading</option>
-      <option value="webWorkers">web workers</option>
-    </select>
-    <br />
-    <input type="submit" value="Submit" />
+    <div class="form-group">
+      <input
+        type="file"
+        id="csvFile"
+        accept=".csv"
+        name="filename"
+        class="form-control-file mb-2"
+      />
+      <select
+        name="wayOfProcessing"
+        class="form-control form-control-sm mb-2"
+        style="width: 200px; height: 30px"
+      >
+        <option value="default">default</option>
+        <option value="pseudoMultiThreading">pseudo multi-threading</option>
+        <option value="webWorkers">web workers</option>
+      </select>
+      <input type="submit" value="Submit" class="btn btn-primary mb-2" />
+    </div>
   </form>
-  
+  <div class="progress" style="width: 40%;visibility: hidden;" id="progress">
+    <div
+      class="progress-bar progress-bar-striped progress-bar-animated"
+      role="progressbar"      
+      aria-valuemin="0"
+      aria-valuemax="100"
+      style="width: 0%;"
+      id="progress_bar"
+    ></div>
+  </div>
+  <!-- <div id="progress" style="width:50%">
+    <div
+      class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+      id="progress_bar"
+      role="progressbar"
+      style="visibility: hidden; height: 50px"
+    ></div>
+  </div> -->
+
   <!-- <script src="./default/main.js"></script> -->
   <!-- <script src="./pseudoMultiThreading/main.js" type="module"></script> -->
   <script src="./FileLoader.js" type="module"></script>
-
 </body>

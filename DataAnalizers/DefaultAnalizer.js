@@ -1,7 +1,8 @@
-import { ProgressBar } from "../ProgressBar.js";
+// import { ProgressBar } from "../ProgressBar.js";
 
 export function analizeDefault(text) {
-  let progressBar = ProgressBar.getProgressBar().createProgressBar();
+  let progressBar = document.getElementById("progress_bar");
+  // let progressBar = ProgressBar.getProgressBar().createProgressBar();
   var pr = document.getElementById("progressNumber");
   if (pr == undefined) {
     pr = document.createElement("div");

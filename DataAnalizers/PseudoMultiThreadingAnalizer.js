@@ -1,8 +1,7 @@
-import { ProgressBar } from "../ProgressBar.js";
+// import { ProgressBar } from "../ProgressBar.js";
 var linesAmount = 0;
 var handler = null;
-var progressBar = ProgressBar.getProgressBar().createProgressBar();
-
+let progressBar = document.getElementById("progress_bar");
 var pr;
 var keys = [];
 let statusRefreshScheduled = false;
@@ -26,7 +25,7 @@ export function analizePseudoMT(text) {
   allLinesLen = linesAmount;
 
   if (!handler) {
-    handler = window.requestIdleCallback(_analize, { timeout: 1000 });
+    handler = window.requestIdleCallback(_analize);
   }
 
   scheduleStatusRefresh();
@@ -66,6 +65,6 @@ function _analize(deadline) {
   }
 
   if (lines.length) {
-    handler = requestIdleCallback(_analize, { timeout: 1000 });
+    handler = requestIdleCallback(_analize);
   }
 }
