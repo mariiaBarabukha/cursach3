@@ -5,9 +5,105 @@
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
     crossorigin="anonymous"
   />
+  <link rel="stylesheet" href="./style.css" />
 </head>
-<body>
-  <form id="myForm">
+<body class="container">
+  <div class="d-flex justify-content-center align-items-center content-wrapper">
+    <div class="content px-3 my-50px border border-primary rounded">
+      <h2>Pseudo-multithreading vs Web-worker comparison</h2>
+      <hr />
+
+      <div>
+        <form id="loadFileForm" class="form-inline">
+          <div class="form-group mb-2">
+            <input
+              type="file"
+              id="csvFile"
+              accept=".csv"
+              name="filename"
+              class="form-control form-control-file mb-2"
+            />
+          </div>
+          <div class="form-group mb-2">
+            <input type="submit" value="Submit" class="btn btn-primary mb-2" />
+          </div>
+
+          <span class="ml-3">Size: </span><span id="size"></span>
+        </form>
+
+        <div id="status" class="d-none">Analyzing...</div>
+        <div class="row d-none" id="loadingBlock">
+          <div class="result col">
+            <h4>Pseudo-multithreading</h4>
+            <div class="progress">
+              <div
+                class="progress-bar progress-bar-striped h-16"
+                role="progressbar"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                id="progress_bar_pmt"
+              ></div>
+            </div>
+            <div class="d-flex justify-content-end pr-2">
+              <span id="handled_pmt"></span>
+              <span>/</span>
+              <span id="total_pmt"></span>
+            </div>
+          </div>
+
+          <div class="result col">
+            <h4>Web-worker</h4>
+            <div class="progress" id="progress_ww">
+              <div
+                class="progress-bar progress-bar-striped progress-bar-animated"
+                role="progressbar"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                style="width: 0%"
+                id="progress_bar_ww"
+              ></div>
+            </div>
+            <div class="d-flex justify-content-end pr-2">
+              <span id="handled_ww"></span>
+              <span>/</span>
+              <span id="total_ww"></span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3>Results</h3>
+          <table class="table" id="results">
+            <tr>
+              <td rowspan="2">
+                File size
+              </td>
+              <td colspan="2">
+                Time, ms
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Pseudo-multithreading
+              </td>
+              <td>
+                Web-worker
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- <div class="row justify-content-center">
+          <h4>Results, total time in miliseconds</h4>
+        </div>
+        <div class="row mx-2">
+          <div class="col border border-primary d-flex justify-content-end">10</div>
+          <div class="col border border-primary d-flex justify-content-end">100</div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <!-- <form id="myForm">
     <div class="form-group">
       <input
         type="file"
@@ -37,7 +133,7 @@
       style="width: 0%;"
       id="progress_bar"
     ></div>
-  </div>
+  </div> -->
   <!-- <div id="progress" style="width:50%">
     <div
       class="progress-bar progress-bar-striped progress-bar-animated bg-success"
@@ -49,5 +145,6 @@
 
   <!-- <script src="./default/main.js"></script> -->
   <!-- <script src="./pseudoMultiThreading/main.js" type="module"></script> -->
-  <script src="./FileLoader.js" type="module"></script>
+  <!-- <script src="./FileLoader.js" type="module"></script> -->
+  <script src="./common/main.js" type="module"></script>
 </body>

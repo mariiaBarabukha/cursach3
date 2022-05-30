@@ -1,22 +1,30 @@
 self.onmessage = (event) => {
-  const text = event.data;
-  // const result = fibonacci(num);
-//   console.log(text);
-  analize(text);
-  self.postMessage("Done");
+  const data = event.data;
+  analize(data.lines, data.keys);
   self.close();
 };
 
-const analize = (text) => {
-  let lines = text.split("\n");
-  let keys = lines[0].split(",");
+const analize = (lines, keys) => {
+  var start = new Date().getTime();
+  
+  
   for (let i = 1; i < lines.length; i++) {
+    
     let obj = {};
     let props = lines[i].split(",");
     for (let j = 0; j < keys.length; j++) {
       obj[keys[j]] = props[j];
     }
-    // console.log(i, lines.length)
-    self.postMessage({index: i, totalLength: lines.length});
+    // self.postMessage({index: i, totalLength: lines.length, isDone: i == lines.length-1});
+    let now = new Date().getTime();	
+    // console.log(diff);
+    if(now - start > 16 || i == lines.length - 1) {
+      self.postMessage({index: i, totalLength: lines.length, isDone: i == lines.length-1});
+      start = new Date().getTime();
+      
+    }
+    // self.postMessage({index: i, totalLength: lines.length, isDone: i == lines.length-1});
+
+    
   }
 };

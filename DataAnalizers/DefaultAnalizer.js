@@ -3,15 +3,15 @@
 export function analizeDefault(text) {
   let progressBar = document.getElementById("progress_bar");
   // let progressBar = ProgressBar.getProgressBar().createProgressBar();
-  var pr = document.getElementById("progressNumber");
-  if (pr == undefined) {
-    pr = document.createElement("div");
-    pr.id = "progressNumber";
-    document.body.appendChild(pr);
-    pr.innerHTML = "0";
+  var handledLinesToTotalAmount = document.getElementById("progressNumber");
+  if (handledLinesToTotalAmount == undefined) {
+    handledLinesToTotalAmount = document.createElement("div");
+    handledLinesToTotalAmount.id = "progressNumber";
+    document.body.appendChild(handledLinesToTotalAmount);
+    handledLinesToTotalAmount.innerHTML = "0";
   }
-  document.body.appendChild(pr);
-  pr.innerHTML = "0";
+  document.body.appendChild(handledLinesToTotalAmount);
+  handledLinesToTotalAmount.innerHTML = "0";
   let lines = text.split("\n");
   let keys = lines[0].split(",");
   // let res = [];
@@ -21,7 +21,7 @@ export function analizeDefault(text) {
     for (let j = 0; j < keys.length; j++) {
       obj[keys[j]] = props[j];
     }
-    pr.innerHTML = `${i}/${lines.length - 1}`;
+    handledLinesToTotalAmount.innerHTML = `${i}/${lines.length - 1}`;
     progressBar.style = `width:${Math.round((i * 100) / (lines.length - 1))}%`;
   }
   // console.log("done");

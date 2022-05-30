@@ -1,0 +1,35 @@
+body{
+    font-size: 18px;
+    font-family: 'Open Sans';
+}
+
+.container{
+    background-color: #a5d0ff;   
+}
+
+.content{
+    background-color:white;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.my-50px{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.result{
+    width: 40%;
+}
+
+.content-wrapper{
+    height:100vh;
+}
+
+.h-16{
+    height: 16px;
+}
+
+.table td {
+    text-align: center;   
+ }

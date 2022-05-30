@@ -1,70 +1,77 @@
-// import { ProgressBar } from "../ProgressBar.js";
+import {scheduleStatusRefresh} from "../common/updateDisplay.js"
+
 var linesAmount = 0;
 var handler = null;
-let progressBar = document.getElementById("progress_bar");
-var pr;
+let progressBar = document.getElementById("progress_bar_pmt");
 var keys = [];
-let statusRefreshScheduled = false;
+
 var lines = [];
 var allLinesLen = 0;
+var handled = document.getElementById("handled_pmt");
+var progressWidth = '0%';
 
 var handledLines = -1;
+var start;
 
-export function analizePseudoMT(text) {
-  pr = document.getElementById("progressNumber");
-  if (pr == undefined) {
-    pr = document.createElement("div");
-    pr.id = "progressNumber";
-    document.body.appendChild(pr);
-    pr.innerHTML = "0";
-  }
+//main method
+export function analizePseudoMT(text, handleEnd) {
+  start = new Date().getTime();
+  handler = null;
+  start = new Date().getTime();
 
+  handledLines = 0;
   lines = text.split("\n");
   keys = lines[0].split(",");
   linesAmount = lines.length - 1;
   allLinesLen = linesAmount;
+  let totalLines = document.getElementById("total_pmt");
+  requestAnimationFrame(() => totalLines.innerHTML = allLinesLen);
+
+  const _analize = (deadline) => {
+    while (
+      (deadline.timeRemaining() > 0 || deadline.didTimeout) &&
+      handledLines < lines.length
+    ) {
+      if(handledLines == lines.length-1){
+        break;
+      }
+      let line = lines[handledLines+1];
+  
+      let obj = {};
+      let props = line.split(",");
+      for (let j = 0; j < keys.length; j++) {
+        obj[keys[j]] = props[j];
+      }
+      
+      handledLines++;
+      
+    }
+  
+    progressWidth = `${Math.round(
+      (handledLines * 100) / (allLinesLen - 1)
+    )}%`;
+  
+    scheduleStatusRefresh(handledLines, progressWidth,progressBar,handled);
+    if (handledLines != lines.length-1) {
+      handler = requestIdleCallback(_analize);
+    }else{
+      // scheduleStatusRefresh(handledLines, progressWidth, progressBar,handled);
+      var end = new Date().getTime();
+      console.log(`Execution took ${end - start} ms`);
+      handleEnd(end - start);
+      // window.postMessage({script: 'pmt', time: end - start});
+    }
+  }
 
   if (!handler) {
     handler = window.requestIdleCallback(_analize);
   }
 
-  scheduleStatusRefresh();
+  scheduleStatusRefresh(handledLines, progressWidth,progressBar,handled); 
+ 
 }
 
-function scheduleStatusRefresh() {
-  if (!statusRefreshScheduled) {
-    requestAnimationFrame(updateDisplay);
-    statusRefreshScheduled = true;
-  }
-}
 
-function updateDisplay() {
-  pr.innerHTML = `${handledLines}/${allLinesLen}`;
-  progressBar.style.width = `${Math.round(
-    (handledLines * 100) / (allLinesLen - 1)
-  )}%`;
-  statusRefreshScheduled = false;
-}
 
-function _analize(deadline) {
-  var a = deadline.timeRemaining();
-  while (
-    (deadline.timeRemaining() > 0 || deadline.didTimeout) &&
-    lines.length
-  ) {
-    let line = lines.shift();
-    
+// processor method
 
-    let obj = {};
-    let props = line.split(",");
-    for (let j = 0; j < keys.length; j++) {
-      obj[keys[j]] = props[j];
-    }
-    scheduleStatusRefresh();
-    handledLines++;
-  }
-
-  if (lines.length) {
-    handler = requestIdleCallback(_analize);
-  }
-}
