@@ -1,5 +1,7 @@
 import {scheduleStatusRefresh} from "../common/updateDisplay.js"
 
+window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+
 var linesAmount = 0;
 var handler = null;
 let progressBar = document.getElementById("progress_bar_pmt");
@@ -51,22 +53,26 @@ export function analizePseudoMT(text, handleEnd) {
       (handledLines * 100) / (allLinesLen - 1)
     )}%`;
   
+    // console.log(progressWidth,handledLines)
     scheduleStatusRefresh(handledLines, progressWidth,progressBar,handled);
-    if (handledLines != lines.length-1) {
+    if (handledLines != lines.length-1) {  
+      // var end = new Date().getTime();
+      // console.log(`Execution took ${end - start} ms`);
       handler = requestIdleCallback(_analize);
     }else{
       // scheduleStatusRefresh(handledLines, progressWidth, progressBar,handled);
-      var end = new Date().getTime();
-      console.log(`Execution took ${end - start} ms`);
-      handleEnd(end - start);
+      // var end = new Date().getTime();
+      // console.log(`Execution took ${end - start} ms`);
+      handleEnd(new Date().getTime() - start);
       // window.postMessage({script: 'pmt', time: end - start});
     }
+
+    
   }
 
   if (!handler) {
     handler = window.requestIdleCallback(_analize);
   }
-
   scheduleStatusRefresh(handledLines, progressWidth,progressBar,handled); 
  
 }

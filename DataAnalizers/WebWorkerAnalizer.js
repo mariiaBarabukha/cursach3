@@ -6,35 +6,29 @@ export function analizeWorker(text, handleEnd) {
 
   let lines = text.split("\n");
   let keys = lines[0].split(",");
+  let time = new Date().getTime();
+  worker.postMessage({ lines, keys, time });
+  requestAnimationFrame(() => document.getElementById("total_ww").innerHTML = lines.length - 1);
+  
   let progressBar = document.getElementById("progress_bar_ww");
   let handled = document.getElementById("handled_ww");
-  requestAnimationFrame(() => document.getElementById("total_ww").innerHTML = lines.length - 1);
-  worker.postMessage({ lines, keys });
+  
+  
 
   worker.onmessage = (event) => {
     
-    let data = event.data;
-    // if (data.index != undefined && data.totalLength != undefined) {      
-      
-    // }
-    // let now = new Date().getTime();
-    // if (now - lastMessage > 17 || data.isDone) {
-    //   handled.innerHTML = data.index;
-    //   progressBar.style = `width:${Math.round(
-    //     (data.index * 100) / (data.totalLength - 1)
-    //   )}%`;
-    //   lastMessage = now;
-    // }
+    let data = event.data;    
     let progressWidth = `${Math.round(
       (data.index * 100) / (data.totalLength - 1)
     )}%`;
-    scheduleStatusRefresh(data.index, progressWidth, progressBar, handled);
+    
     if (data.isDone) {
-      var end = new Date().getTime();
-      console.log(`Execution took ${end - start} ms`);
-      handleEnd(end - start);
-      // window.postMessage({ script: "ww", time: end - start });
+      // var end = new Date().getTime();
+      // console.log(`Execution took ${end - start} ms`);
+      handleEnd(new Date().getTime() - start);
+      // console.log(data.index, data.totalLength)
     }
+    scheduleStatusRefresh(data.index, progressWidth, progressBar, handled);
   };
 
   // function updateDisplay(){
@@ -43,4 +37,5 @@ export function analizeWorker(text, handleEnd) {
   //     (data.index * 100) / (data.totalLength - 1)
   //   )}%`;
   // }
+
 }

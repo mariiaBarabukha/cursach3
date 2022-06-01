@@ -1,4 +1,5 @@
 self.onmessage = (event) => {
+  // console.log(new Date().getTime() - event.data.time);
   const data = event.data;
   analize(data.lines, data.keys);
   self.close();
@@ -18,7 +19,7 @@ const analize = (lines, keys) => {
     // self.postMessage({index: i, totalLength: lines.length, isDone: i == lines.length-1});
     let now = new Date().getTime();	
     // console.log(diff);
-    if(now - start > 16 || i == lines.length - 1) {
+    if(now - start > 17 || i == lines.length - 1) {
       self.postMessage({index: i, totalLength: lines.length, isDone: i == lines.length-1});
       start = new Date().getTime();
       

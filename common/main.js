@@ -21,17 +21,17 @@ document.getElementById("loadFileForm").onsubmit = (e) => {
         requestAnimationFrame(() => document.getElementById("loadingBlock").classList = "d-flex");
         time_pmt = 0;
         time_ww = 0;
-        // analizeWorker(text, handleEndOfWW);
-        analizePseudoMT(text,handleEndOfPMT); 
+        analizeWorker(text, handleEndOfWW);
+        // analizePseudoMT(text,handleEndOfPMT); 
 
-        function handleEndOfPMT(time){
-            time_pmt = time;
-            // analizeWorker(text, handleEndOfWW);
-        }
+        // function handleEndOfPMT(time){
+        //     time_pmt = time;
+        //     analizeWorker(text, handleEndOfWW);
+        // }
 
         function handleEndOfWW(time){
             time_ww = time;
-            requestAnimationFrame(addResultRow);
+            // requestAnimationFrame(addResultRow);
         }
         
     }
